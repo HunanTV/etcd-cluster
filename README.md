@@ -9,8 +9,6 @@ Steps:
 
     	nbe app:setenv prod ETCD_INITIAL_CLUSTER=node0=http://10.100.1.145:3001,node1=http://10.100.1.155:3001,node2=http://10.1.201.110:3001
     	nbe app:setenv prod ETCD_INITIAL_CLUSTER_STATE=new
-    	nbe app:setenv recover ETCD_INITIAL_CLUSTER=node0=http://10.100.1.145:3001,node1=http://10.100.1.155:3001,node2=http://10.1.201.110:3001
-    	nbe app:setenv recover ETCD_INITIAL_CLUSTER_STATE=existing
 
 2. Make sure `/data/etcd-cluster` is on server and has the right privilege.
 
@@ -28,6 +26,19 @@ Steps:
 
         	nbe app:dpri platform app node2-host --image ${etcd-image} --raw --host ${110}
 
-4. Recover
+4. Add a node
 
-    If one node is down and then needs to be recovered, deploy with `recover` environment. Make sure `/data/etcd-cluster` is still available.
+    * Set new environments
+
+    	    nbe app:setenv add ETCD_INITIAL_CLUSTER=node0=http://10.100.1.145:3001,node1=http://10.100.1.155:3001,node2=http://10.1.201.110:3001,node3=${node3-url}
+    	    nbe app:setenv add ETCD_INITIAL_CLUSTER_STATE=existing
+
+    * Deploy with environment `add`.
+
+5. Remove a node
+
+    Use `etcdctl` to remove a member, see [here](https://github.com/coreos/etcd/blob/master/Documentation/runtime-configuration.md#remove-a-member).
+
+6. Recover
+
+    Just restart the container. If this doesn't work, remove the node first and then add it again.
