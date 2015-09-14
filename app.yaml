@@ -1,0 +1,27 @@
+appname: "etcd-cluster"
+entrypoints:
+    node0-host:
+        cmd: "etcd --data-dir /etcd/data --name node0 --initial-advertise-peer-urls http://10.100.1.145:3001 --listen-peer-urls http://10.100.1.145:3001 --listen-client-urls http://10.100.1.145:4011 --advertise-client-urls http://10.100.1.145:4011 --initial-cluster-token cluster"
+        ports:
+            - "3001/tcp"
+            - "4011/tcp"
+        network_mode: "host"
+    node1-host:
+        cmd: "etcd --data-dir /etcd/data --name node1 --initial-advertise-peer-urls http://10.100.1.155:3001 --listen-peer-urls http://10.100.1.155:3001 --listen-client-urls http://10.100.1.155:4011 --advertise-client-urls http://10.100.1.155:4011 --initial-cluster-token cluster"
+        ports:
+            - "3001/tcp"
+            - "4011/tcp"
+        network_mode: "host"
+    node2-host:
+        cmd: "etcd --data-dir /etcd/data --name node2 --initial-advertise-peer-urls http://10.1.201.110:3001 --listen-peer-urls http://10.1.201.110:3001 --listen-client-urls http://10.1.201.110:4011 --advertise-client-urls http://10.1.201.110:4011 --initial-cluster-token cluster"
+        ports:
+            - "3001/tcp"
+            - "4011/tcp"
+        network_mode: "host"
+volumes:
+    - "/etcd/data"
+binds:
+    /data/etcd-cluster:
+        bind: "/etcd/data"
+        ro: false
+build: ""
