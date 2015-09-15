@@ -33,6 +33,10 @@ Steps:
     	    nbe app:setenv add ETCD_INITIAL_CLUSTER=node0=http://10.100.1.145:3001,node1=http://10.100.1.155:3001,node2=http://10.1.201.110:3001,node3=${node3-url}
     	    nbe app:setenv add ETCD_INITIAL_CLUSTER_STATE=existing
 
+    * Add member
+
+            etcdctl member add node3 ${node3-url}
+
     * Deploy with environment `add`, also see [here](https://github.com/coreos/etcd/blob/master/Documentation/runtime-configuration.md#add-a-new-member).
 
 5. Remove a node
