@@ -7,7 +7,7 @@ Steps:
 
 1. Set eru environments
 
-    	nbe app:setenv prod ETCD_INITIAL_CLUSTER=node0=http://10.100.1.145:3001,node1=http://10.100.1.155:3001,node2=http://10.1.201.110:3001
+    	nbe app:setenv prod ETCD_INITIAL_CLUSTER=node0=${uri0},node1=${uri1},node2=${uri2}
     	nbe app:setenv prod ETCD_INITIAL_CLUSTER_STATE=new
 
 2. Make sure `/data/etcd-cluster` is on server and has the right privilege.
@@ -16,26 +16,26 @@ Steps:
 
     * node0
 
-        	nbe app:dpri platform dns node0-host --image ${etcd-image} --raw --host ${145}
+        	nbe app:dpri platform dns node0-host --image ${etcd-image} --raw --host ${url0}
 
     * node1
 
-        	nbe app:dpri platform prod node1-host --image ${etcd-image} --raw --host ${155}
+        	nbe app:dpri platform prod node1-host --image ${etcd-image} --raw --host ${url1}
 
     * node2
 
-        	nbe app:dpri platform app node2-host --image ${etcd-image} --raw --host ${110}
+        	nbe app:dpri platform app node2-host --image ${etcd-image} --raw --host ${url2}
 
 4. Add a node
 
     * Set new environments
 
-    	    nbe app:setenv add ETCD_INITIAL_CLUSTER=node0=http://10.100.1.145:3001,node1=http://10.100.1.155:3001,node2=http://10.1.201.110:3001,node3=${node3-url}
+    	    nbe app:setenv add ETCD_INITIAL_CLUSTER=node0=${uri0},node1=${uri1},node2=${uri2},node3=${uri3}
     	    nbe app:setenv add ETCD_INITIAL_CLUSTER_STATE=existing
 
     * Add member
 
-            etcdctl member add node3 ${node3-url}
+            etcdctl member add node3 ${uri3}
 
     * Deploy with environment `add`, also see [here](https://github.com/coreos/etcd/blob/master/Documentation/runtime-configuration.md#add-a-new-member).
 
