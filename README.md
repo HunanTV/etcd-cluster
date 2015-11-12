@@ -28,14 +28,14 @@ Steps:
 
 4. Add a node
 
+    * Add member
+
+            etcdctl member add node3 ${uri3}
+
     * Set new environments
 
     	    nbe app:setenv add ETCD_INITIAL_CLUSTER=node0=${uri0},node1=${uri1},node2=${uri2},node3=${uri3}
     	    nbe app:setenv add ETCD_INITIAL_CLUSTER_STATE=existing
-
-    * Add member
-
-            etcdctl member add node3 ${uri3}
 
     * Deploy with environment `add`, also see [here](https://github.com/coreos/etcd/blob/master/Documentation/runtime-configuration.md#add-a-new-member).
 

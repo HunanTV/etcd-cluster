@@ -18,6 +18,18 @@ entrypoints:
             - "3001/tcp"
             - "4011/tcp"
         network_mode: "host"
+    node3-host:
+        cmd: "etcd --data-dir /etcd/data --name node3 --initial-advertise-peer-urls http://192.168.1.57:3001 --listen-peer-urls http://192.168.1.57:3001 --listen-client-urls http://192.168.1.57:4011 --advertise-client-urls http://192.168.1.57:4011"
+        ports:
+            - "3001/tcp"
+            - "4011/tcp"
+        network_mode: "host"
+    node4-host:
+        cmd: "etcd --data-dir /etcd/data --name node4 --initial-advertise-peer-urls http://192.168.1.68:3001 --listen-peer-urls http://192.168.1.68:3001 --listen-client-urls http://192.168.1.68:4011 --advertise-client-urls http://192.168.1.68:4011"
+        ports:
+            - "3001/tcp"
+            - "4011/tcp"
+        network_mode: "host"
 volumes:
     - "/etcd/data"
 binds:
